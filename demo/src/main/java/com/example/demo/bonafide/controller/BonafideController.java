@@ -7,15 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/submit-bonafide-requisition")
 public class BonafideController {
 
     @Autowired
     private BonafideService bonafideService;
 
-    @PostMapping
-    public String submitForm(@ModelAttribute BonafideRequest bonafideRequest) {
-        bonafideService.processBonafideRequest(bonafideRequest);
-        return "success"; // returns the success.html page on successful submission
+    @GetMapping("/")
+    public String showForm() {
+        return "bonafideForm";  // Ensure bonafideForm.html exists in your frontend
+    }
+
+    @PostMapping("/submit-bonafide-requisition")
+    public String submitBonafide(@ModelAttribute BonafideRequest request) {
+        bonafideService.saveRequest(request);  // Save the form data
+        return "success";  // Redirect to a success page
     }
 }
